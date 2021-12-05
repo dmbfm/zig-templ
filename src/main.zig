@@ -132,7 +132,6 @@ pub fn templ(allocator: Allocator, string: []const u8, data: anytype) ![]u8 {
                                                 typeError = error.InvalidArrayChildType;
                                             }
                                         },
-
                                         else => {
                                             typeError = error.TypeNotImplemented;
                                         },

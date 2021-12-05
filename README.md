@@ -14,3 +14,9 @@ pub fn main() !void {
     std.log.info("{}", .{ output });
 }
 ```
+
+## TODO
+
+- [ ] Formatting options
+- [ ] Output directly to a writer (no allocation)
+- [ ] Support more types

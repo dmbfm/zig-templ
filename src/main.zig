@@ -73,7 +73,6 @@ pub fn templ(allocator: Allocator, string: []const u8, data: anytype) ![]u8 {
 
         while (stream.next()) |ch| {
             if (ch == '$' and stream.match('{')) {
-                // if (stream.match('{')) {
                 var annotation_len: usize = 2;
                 var annotation_name_start: usize = stream.i;
                 var annotation_name_end: usize = stream.i;
@@ -108,8 +107,7 @@ pub fn templ(allocator: Allocator, string: []const u8, data: anytype) ![]u8 {
 
                             len += @intCast(i64, final_len) - 1;
                         } else {
-                            // NOTE: I store the errror... If I try to return the error from inside the switch I get
-                            //       a compiler crash (bug).
+                            // NOTE: I store the error here because if I try to return the error from inside the switch I get a compiler crash (bug).
                             var typeError: ?anyerror = null;
                             switch (@typeInfo(field_type)) {
                                 .Int, .Float, .ComptimeInt, .ComptimeFloat => {
@@ -132,9 +130,7 @@ pub fn templ(allocator: Allocator, string: []const u8, data: anytype) ![]u8 {
                                     },
                                     .C => {},
                                 },
-                                else => {
-                                    try wr.writeAll("X");
-                                },
+                                else => {},
                             }
 
                             if (typeError != null) {
@@ -157,21 +153,6 @@ pub fn templ(allocator: Allocator, string: []const u8, data: anytype) ![]u8 {
 
     return buffer;
 }
-
-// pub fn main() !void {
-//     var x: []const u8 = "ok";
-//     var template = "${name}, ${othername} blalskdjfasdf ${stillother} ${num}";
-//     var output = try templ(std.heap.page_allocator, template, .{
-//         .tst = "ok",
-//         .someother = 234,
-//         .name = x,
-//         .othername = "xx",
-//         .stillother = "xxx",
-//         .num = 23,
-//     });
-
-//     std.log.info("{s}", .{output});
-// }
 
 const expect = std.testing.expect;
 const test_allocator = std.testing.allocator;

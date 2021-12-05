@@ -121,7 +121,9 @@ pub fn templ(allocator: Allocator, string: []const u8, data: anytype) ![]u8 {
                                             typeError = error.InvalidSliceChildType;
                                         }
                                     },
-                                    .Many => {},
+                                    .Many => {
+                                        typeError = error.TypeNotImplemented;
+                                    },
                                     .One => switch (@typeInfo(ptr.child)) {
                                         .Array => |arr| {
                                             if (arr.child == u8) {
@@ -131,11 +133,17 @@ pub fn templ(allocator: Allocator, string: []const u8, data: anytype) ![]u8 {
                                             }
                                         },
 
-                                        else => {},
+                                        else => {
+                                            typeError = error.TypeNotImplemented;
+                                        },
                                     },
-                                    .C => {},
+                                    .C => {
+                                        typeError = error.TypeNotImplemented;
+                                    },
                                 },
-                                else => {},
+                                else => {
+                                    typeError = error.TypeNotImplemented;
+                                },
                             }
 
                             if (typeError != null) {

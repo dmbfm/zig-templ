@@ -4,7 +4,7 @@ Simple text templating library for zig. Currently WIP stage.
 
 ## Usage
 
-```
+```zig
 const templ = @import("zig-simple-tamplate/src/main.zig").templ;
 
 pub fn main() !void {

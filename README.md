@@ -1,14 +1,14 @@
-# zig-simple-tamplate
+# zig-templ
 
-Simple text templating library for zig. Currently WIP stage. 
+A simple text templating library for zig. Currently WIP stage. 
 
 ## Usage
 
 ```zig
-const templ = @import("zig-simple-tamplate/src/main.zig").templ;
+const templ = @import("zig-templ/src/main.zig").templ;
 
 pub fn main() !void {
-    var output = templ(std.heap.page_allocator, "zig-${simple}-template", .{ .simple = "simple" });
+    var output = templ(std.heap.page_allocator, "zig-${name}", .{ .name = "templ" });
     defer std.heap.page_allocator.free(output);
 
     std.log.info("{}", .{ output });

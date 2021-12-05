@@ -118,14 +118,19 @@ pub fn templ(allocator: Allocator, string: []const u8, data: anytype) ![]u8 {
                                         if (ptr.child == u8) {
                                             try wr.writeAll(dat_field);
                                         } else {
-                                            typeError = error.InalidSliceChildType;
+                                            typeError = error.InvalidSliceChildType;
                                         }
                                     },
                                     .Many => {},
                                     .One => switch (@typeInfo(ptr.child)) {
-                                        .Array => {
-                                            try wr.writeAll(dat_field);
+                                        .Array => |arr| {
+                                            if (arr.child == u8) {
+                                                try wr.writeAll(dat_field);
+                                            } else {
+                                                typeError = error.InvalidArrayChildType;
+                                            }
                                         },
+
                                         else => {},
                                     },
                                     .C => {},
